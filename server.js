@@ -1,4 +1,6 @@
 const http = require('http');
+const catsDb = require('./catsDB.json');
+const editCat = require('./views/catShelter.js');
 
 const homePage = require('./views/home.js');
 const stylesHomepage = require('./views/styles/homepage.style.css.js');
@@ -9,21 +11,21 @@ const server = http.createServer((req, res) => {
         'Content-type': 'text/html'
     });
 
-    switch(req.url){
-        case '/':
-            res.write(homePage);
-                break;
-        case '/content/styles/site.css':
-            res.writeHead(200, {
-                'Content-type': 'text/css'
-            });
-            res.write(stylesHomepage);
-                break;
-        default:
-            res.write(`
-                    <h1>404</h1>
-                `);
-            break;
+    if(req.url == '/') {
+        res.write(homePage);
+    } else if (/cats\/\d+\/edit/.test(req.url)) {
+        let catId = req.url.split('/')[2];
+        const cat = catsDb.find(x => x.id == catId);
+        res.write(editCat(cat));
+    } else if (req.url == '/content/styles/site.css') {
+        res.writeHead(200, {
+            'Content-type': 'text/css'
+        });
+        res.write(stylesHomepage);
+    } else {
+        res.write(`
+            <h1>404</h1>
+        `);
     }
 
     res.end();

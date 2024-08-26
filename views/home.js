@@ -41,7 +41,7 @@ module.exports = `
                         <p><span>Breed: </span>${cats.breed}</p>
                         <p><span>Description: </span>${cats.description}</p>
                         <ul class="buttons">
-                            <li class="btn edit"><a href="">Change Info</a></li>
+                            <li class="btn edit"><a href="/cats/${cats.id}/edit">Change Info</a></li>
                             <li class="btn delete"><a href="">New Home</a></li>
                         </ul>
                     </li>
