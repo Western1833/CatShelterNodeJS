@@ -20,9 +20,10 @@ const server = http.createServer(async (req, res) => {
         homePage = homePage.replace('{{cats}}', catsHtml.join(''));
         res.write(homePage);
     } else if (/cats\/\d+\/edit/.test(req.url)) {
-        let catId = req.url.split('/')[2];
-        const cat = catsDb.find(x => x.id == catId);
-        res.write(editCat(cat));
+        // let catId = req.url.split('/')[2];
+        // const cat = catsDb.find(x => x.id == catId);
+        const editCatHtml = await readFile('./views/catShelter.html');
+        res.write(editCatHtml);
     } else if (req.url == '/content/styles/site.css') {
         res.writeHead(200, {
             'Content-type': 'text/css'

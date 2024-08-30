@@ -7,10 +7,11 @@ function readFile(path) {
 async function catTemplate(cat) {
     const html = await readFile('./views/partials/cat.html');
 
-    const result = html.replaceAll('{{name}}', cat.name).replace('{{description}}', cat.description).replace('{{id}}', cat.id)
-    .replace('{{imageUrl}}', cat.imageUrl).replace('{{breed}}', cat.breed);
+    const allCats = Object.keys(cat).reduce((result, key) => {
+        return result.replaceAll(`{{${key}}}`, cat[key]);
+    }, html);
 
-    return result;
+    return allCats;
 }
 
 module.exports = {readFile, catTemplate};
